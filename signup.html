@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — YABA</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#0073EA;--blue2:#1F76C2;--blue-lt:#DCF0FF;
+  --coral:#FF5C35;--coral-lt:#FFE8E2;
+  --green:#00CA72;--green-lt:#D6F7E8;
+  --gold:#FFCB00;--purple:#A25DDC;--purple-lt:#EFE3FF;
+  --dark:#1C1F3B;--gray:#676879;--gray2:#C3C6D4;
+  --border:#E6E9EF;--off:#F6F7FB;--white:#fff;
+  --shadow:0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.16);
+}
+body{font-family:'Inter',sans-serif;background:var(--off);color:var(--dark);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3,h4{font-family:'Nunito',sans-serif;font-weight:900;line-height:1.15}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+.nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.4rem;color:var(--dark);display:flex;align-items:center;gap:6px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.nav-right{font-size:0.88rem;color:var(--gray)}
+.nav-right a{color:var(--blue);font-weight:700}
+
+/* LAYOUT */
+.page{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 57px)}
+
+/* LEFT PANEL */
+.left{background:linear-gradient(160deg,#0052CC 0%,#0073EA 60%,#0099FF 100%);padding:60px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.left-blob1{position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,0.06);top:-150px;left:-100px}
+.left-blob2{position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,92,53,0.12);bottom:-100px;right:-80px}
+.left-ring1{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);top:50%;left:50%;transform:translate(-50%,-50%)}
+.left-ring2{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);top:50%;left:50%;transform:translate(-50%,-50%)}
+.left-content{position:relative;z-index:2}
+.left h2{color:#fff;font-size:2rem;margin-bottom:14px}
+.left p{color:rgba(255,255,255,0.75);margin-bottom:36px;font-size:1rem;line-height:1.7}
+.perks{display:flex;flex-direction:column;gap:14px;margin-bottom:40px}
+.perk{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.9);font-size:0.9rem;font-weight:500}
+.perk-check{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.left-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lst{background:rgba(255,255,255,0.1);border-radius:10px;padding:14px;text-align:center}
+.lst-num{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.6rem;color:#fff;margin-bottom:3px}
+.lst-lbl{font-size:0.7rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.06em;font-weight:600}
+
+/* RIGHT PANEL */
+.right{background:#fff;padding:48px 56px;display:flex;align-items:center;justify-content:center}
+.form-wrap{width:100%;max-width:420px}
+.form-title{font-size:1.6rem;margin-bottom:6px}
+.form-sub{color:var(--gray);font-size:0.88rem;margin-bottom:28px}
+.form-sub a{color:var(--blue);font-weight:700}
+
+/* PLAN SELECTOR */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.plan{border:1.5px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;transition:all 0.2s;text-align:center;background:var(--off)}
+.plan:hover{border-color:var(--blue)}
+.plan.active{border-color:var(--blue);background:var(--blue-lt)}
+.plan-name{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.82rem;color:var(--dark);margin-bottom:2px}
+.plan-price{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:var(--blue)}
+.plan-badge{display:inline-block;background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:0.6rem;font-weight:800;text-transform:uppercase;margin-bottom:3px}
+.plan-note{font-size:0.72rem;color:var(--green);font-weight:700;text-align:center;margin-bottom:20px}
+
+/* FORM */
+.form{display:flex;flex-direction:column;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:5px}
+.label{font-size:0.78rem;font-weight:700;color:var(--dark)}
+.input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--dark);background:#fff;outline:none;transition:border-color 0.2s}
+.input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,115,234,0.1)}
+.input::placeholder{color:var(--gray2)}
+.input-wrap{position:relative}
+.input-wrap .input{padding-right:40px}
+.input-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--gray2);transition:color 0.2s;display:flex;align-items:center}
+.input-toggle:hover{color:var(--dark)}
+.check-row{display:flex;align-items:flex-start;gap:8px;font-size:0.82rem;color:var(--gray)}
+.check-row input{margin-top:2px;accent-color:var(--blue);cursor:pointer}
+.check-row a{color:var(--blue);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;border:none;transition:all 0.2s;width:100%}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 4px 14px rgba(0,115,234,0.3)}
+.btn-blue:hover{background:var(--blue2);transform:translateY(-1px)}
+.btn-blue:disabled{opacity:0.6;pointer-events:none}
+.divider{display:flex;align-items:center;gap:10px;color:var(--gray2);font-size:0.82rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-outline{background:#fff;color:var(--dark);border:1.5px solid var(--border);box-shadow:var(--shadow)}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.g-icon{width:18px;height:18px}
+
+/* TOAST */
+.toasts{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--dark);color:#fff;padding:11px 16px;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.83rem;box-shadow:var(--shadow-lg);animation:tin 0.3s ease}
+.toast.success{background:var(--green);color:var(--dark)}
+.toast.error{background:var(--coral);color:#fff}
+@keyframes tin{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
+
+@media(max-width:900px){
+  .page{grid-template-columns:1fr}
+  .left{display:none}
+  .right{padding:40px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><div class="logo-dot"></div>YABA</div>
+  <div class="nav-right">Already have an account? <a href="login.html">Log in</a></div>
+</nav>
+
+<div class="page">
+  <!-- LEFT -->
+  <div class="left">
+    <div class="left-blob1"></div>
+    <div class="left-blob2"></div>
+    <div class="left-ring1"></div>
+    <div class="left-ring2"></div>
+    <div class="left-content">
+      <h2>Build your entire business in 90 seconds.</h2>
+      <p>Describe your business. YABA generates your website, CRM, funnels, content calendar, and 32 automated workflows — instantly.</p>
+      <div class="perks">
+        <div class="perk"><div class="perk-check"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>AI website generated on signup</div>
+        <div class="perk"><div class="perk-check"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Business plan + financial roadmap</div>
+        <div class="perk"><div class="perk-check"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>30 days of content created for you</div>
+        <div class="perk"><div class="perk-check"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>32 workflows activated automatically</div>
+        <div class="perk"><div class="perk-check"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>14-day free trial &mdash; no card needed</div>
+      </div>
+      <div class="left-stats">
+        <div class="lst"><div class="lst-num">2,400+</div><div class="lst-lbl">Businesses</div></div>
+        <div class="lst"><div class="lst-num">90s</div><div class="lst-lbl">Setup Time</div></div>
+        <div class="lst"><div class="lst-num">32</div><div class="lst-lbl">Workflows</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="form-wrap">
+      <h2 class="form-title">Create your account</h2>
+      <p class="form-sub">Already have an account? <a href="login.html">Log in</a></p>
+
+      <!-- PLAN -->
+      <div class="plans" id="plans">
+        <div class="plan" data-plan="starter" onclick="selectPlan('starter',this)">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">$49<span style="font-size:0.7rem;color:var(--gray);font-weight:600">/mo</span></div>
+        </div>
+        <div class="plan active" data-plan="growth" onclick="selectPlan('growth',this)">
+          <div class="plan-badge">Popular</div>
+          <div class="plan-name">Growth</div>
+          <div class="plan-price">$97<span style="font-size:0.7rem;color:var(--gray);font-weight:600">/mo</span></div>
+        </div>
+        <div class="plan" data-plan="agency" onclick="selectPlan('agency',this)">
+          <div class="plan-name">Agency</div>
+          <div class="plan-price">$197<span style="font-size:0.7rem;color:var(--gray);font-weight:600">/mo</span></div>
+        </div>
+      </div>
+      <div class="plan-note">14-day free trial on all plans &mdash; no credit card required</div>
+
+      <!-- FORM -->
+      <div class="form">
+        <div class="form-row">
+          <div class="field">
+            <label class="label">First Name</label>
+            <input class="input" type="text" id="firstName" placeholder="Maya" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label class="label">Last Name</label>
+            <input class="input" type="text" id="lastName" placeholder="Johnson" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Email Address</label>
+          <input class="input" type="email" id="email" placeholder="maya@yourbusiness.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="password" placeholder="At least 8 characters" autocomplete="new-password">
+            <button class="input-toggle" onclick="togglePwd('password')" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Confirm Password</label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="confirmPassword" placeholder="Repeat your password" autocomplete="new-password">
+            <button class="input-toggle" onclick="togglePwd('confirmPassword')" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="terms">
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <button class="btn btn-blue" id="signup-btn" onclick="handleSignup()">Create Account &rarr;</button>
+        <div class="divider">or</div>
+        <button class="btn btn-outline" onclick="toast('Google signup coming soon!')">
+          <svg class="g-icon" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script>
+let selectedPlan = 'growth'
+function selectPlan(plan, el) {
+  selectedPlan = plan
+  document.querySelectorAll('.plan').forEach(p => p.classList.remove('active'))
+  el.classList.add('active')
+}
+function togglePwd(id) {
+  const i = document.getElementById(id)
+  i.type = i.type === 'password' ? 'text' : 'password'
+}
+function toast(msg, type='') {
+  const c = document.getElementById('toasts')
+  const t = document.createElement('div')
+  t.className = `toast ${type}`
+  t.textContent = msg
+  c.appendChild(t)
+  setTimeout(() => t.remove(), 3500)
+}
+async function handleSignup() {
+  const firstName = document.getElementById('firstName').value.trim()
+  const lastName = document.getElementById('lastName').value.trim()
+  const email = document.getElementById('email').value.trim()
+  const password = document.getElementById('password').value
+  const confirmPassword = document.getElementById('confirmPassword').value
+  const terms = document.getElementById('terms').checked
+  if (!firstName || !lastName) return toast('Please enter your full name', 'error')
+  if (!email) return toast('Please enter your email', 'error')
+  if (!password || password.length < 8) return toast('Password must be at least 8 characters', 'error')
+  if (password !== confirmPassword) return toast('Passwords do not match', 'error')
+  if (!terms) return toast('Please agree to the terms', 'error')
+  const btn = document.getElementById('signup-btn')
+  btn.textContent = 'Creating your account...'
+  btn.disabled = true
+  try {
+    const res = await fetch('/.netlify/functions/auth-signup', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({firstName, lastName, email, password, plan: selectedPlan})
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error || 'Signup failed')
+    localStorage.setItem('yaba_token', data.token)
+    localStorage.setItem('yaba_user', JSON.stringify(data.user))
+    toast('Account created! Taking you to onboarding...', 'success')
+    setTimeout(() => window.location.href = 'onboarding.html', 1200)
+  } catch(err) {
+    toast(err.message, 'error')
+    btn.textContent = 'Create Account →'
+    btn.disabled = false
+  }
+}
+document.addEventListener('keydown', e => { if(e.key === 'Enter') handleSignup() })
+const urlPlan = new URLSearchParams(window.location.search).get('plan')
+if(urlPlan) {
+  document.querySelectorAll('.plan').forEach(p => {
+    p.classList.toggle('active', p.dataset.plan === urlPlan)
+  })
+  selectedPlan = urlPlan || 'growth'
+}
+</script>
+</body>
+</html>
