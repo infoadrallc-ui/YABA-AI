@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — YABA</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+<div class="auth-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="auth-left-inner">
+      <a href="/" class="auth-logo">YABA ✨</a>
+      <h1>Build your business<br><span class="text-grad">in 10 minutes.</span></h1>
+      <p>Join 2,400+ businesses already running on YABA.</p>
+      <div class="auth-perks">
+        <div class="perk">✅ AI website generated on signup</div>
+        <div class="perk">✅ Business plan + financial roadmap</div>
+        <div class="perk">✅ 30 days of content created for you</div>
+        <div class="perk">✅ 32 workflows activated automatically</div>
+        <div class="perk">✅ 14-day free trial — no card needed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <div class="auth-form-header">
+        <h2>Create your account</h2>
+        <p>Already have an account? <a href="/login">Log in</a></p>
+      </div>
+
+      <!-- PLAN SELECTOR -->
+      <div class="plan-selector" id="plan-selector">
+        <div class="plan-opt active" data-plan="growth" onclick="selectPlan('growth',this)">
+          <div class="plan-opt-name">Growth <span class="badge badge-coral">Popular</span></div>
+          <div class="plan-opt-price">$97/mo</div>
+        </div>
+        <div class="plan-opt" data-plan="starter" onclick="selectPlan('starter',this)">
+          <div class="plan-opt-name">Starter</div>
+          <div class="plan-opt-price">$49/mo</div>
+        </div>
+        <div class="plan-opt" data-plan="agency" onclick="selectPlan('agency',this)">
+          <div class="plan-opt-name">Agency</div>
+          <div class="plan-opt-price">$197/mo</div>
+        </div>
+      </div>
+      <p class="plan-trial-note">14-day free trial on all plans</p>
+
+      <!-- FORM -->
+      <div class="auth-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="label">First Name</label>
+            <input class="input" type="text" id="firstName" placeholder="Maya" required>
+          </div>
+          <div class="form-group">
+            <label class="label">Last Name</label>
+            <input class="input" type="text" id="lastName" placeholder="Johnson" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="label">Email</label>
+          <input class="input" type="email" id="email" placeholder="maya@sweetcravings.com" required>
+        </div>
+        <div class="form-group">
+          <label class="label">Password</label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="password" placeholder="At least 8 characters" required>
+            <button class="input-toggle" onclick="togglePassword()" type="button">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="label">Confirm Password</label>
+          <input class="input" type="password" id="confirmPassword" placeholder="Repeat password" required>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:16px;font-size:1rem" onclick="handleSignup()" id="signup-btn">
+          Start Free Trial →
+        </button>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <button class="btn btn-secondary" style="width:100%;justify-content:center;padding:14px" onclick="showToast('Google signup coming soon!')">
+          <span>🔵</span> Continue with Google
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast-container" id="toasts"></div>
+<script src="/js/auth.js"></script>
+<script>
+  // Pre-select plan from URL param
+  const urlPlan = new URLSearchParams(window.location.search).get('plan')
+  if (urlPlan) {
+    document.querySelectorAll('.plan-opt').forEach(el => {
+      el.classList.toggle('active', el.dataset.plan === urlPlan)
+    })
+  }
+</script>
+</body>
+</html>

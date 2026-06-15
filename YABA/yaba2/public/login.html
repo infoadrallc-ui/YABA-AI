@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In — YABA</title>
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+<div class="auth-layout">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="auth-left-inner">
+      <a href="/" class="auth-logo">YABA ✨</a>
+      <h1>Welcome back.<br><span class="text-grad">Let's keep growing.</span></h1>
+      <p>Your business has been working while you were away.</p>
+      <div class="auth-stats">
+        <div class="stat-card">
+          <div class="stat-num">32</div>
+          <div class="stat-lbl">Workflows Running</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-lbl">AI Working For You</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-lbl">Leads Being Followed Up</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-form-wrap">
+      <div class="auth-form-header">
+        <h2>Log in to YABA</h2>
+        <p>Don't have an account? <a href="/signup">Start free trial</a></p>
+      </div>
+
+      <div class="auth-form">
+        <div class="form-group">
+          <label class="label">Email</label>
+          <input class="input" type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="label">Password</label>
+          <div class="input-wrap">
+            <input class="input" type="password" id="password" placeholder="Your password" required>
+            <button class="input-toggle" onclick="togglePassword()" type="button">👁</button>
+          </div>
+          <a href="#" class="forgot-link" onclick="handleForgotPassword()">Forgot password?</a>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="remember">
+          <label for="remember">Keep me logged in</label>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:16px;font-size:1rem" onclick="handleLogin()" id="login-btn">
+          Log In →
+        </button>
+
+        <div class="auth-divider"><span>or</span></div>
+
+        <button class="btn btn-secondary" style="width:100%;justify-content:center;padding:14px" onclick="showToast('Google login coming soon!')">
+          <span>🔵</span> Continue with Google
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast-container" id="toasts"></div>
+<script src="/js/auth.js"></script>
+</body>
+</html>

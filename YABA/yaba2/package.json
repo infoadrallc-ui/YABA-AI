@@ -1,0 +1,21 @@
+{
+  "name": "yaba",
+  "version": "1.0.0",
+  "description": "Your AI Business Assistant",
+  "scripts": {
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "replicate": "^0.29.0",
+    "stripe": "^14.0.0",
+    "@sendgrid/mail": "^8.1.0",
+    "twilio": "^5.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

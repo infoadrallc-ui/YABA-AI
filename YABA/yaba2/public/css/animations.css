@@ -1,0 +1,173 @@
+/* ── ORB ANIMATIONS ── */
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(30px,-30px) scale(1.05); }
+  66%      { transform: translate(-20px,20px) scale(0.95); }
+}
+
+/* ── HERO PARTICLE ANIMATIONS ── */
+@keyframes sprinklefall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes floatUp {
+  0%,100% { transform: translateY(0) rotate(-5deg); }
+  50%      { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes dripDown {
+  0%   { height: 0; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { height: 120px; opacity: 0; }
+}
+
+@keyframes sparkle {
+  0%,100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes bloomGrow {
+  0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
+  60%  { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ── FLOATING PRODUCT CAROUSEL ── */
+.float-product {
+  position: absolute;
+  animation: floatUp var(--duration, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  font-size: var(--size, 2rem);
+  opacity: 0.85;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── GLASSMORPHISM ── */
+.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--radius-lg);
+}
+
+.glass-dark {
+  background: rgba(31,31,53,0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+}
+
+/* ── PAGE TRANSITIONS ── */
+.page-enter {
+  animation: pageEnter 0.4s ease forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PULSE ── */
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+.pulse { animation: pulse 2s ease-in-out infinite; }
+
+/* ── SHIMMER LOADING ── */
+.shimmer {
+  background: linear-gradient(90deg, var(--border) 25%, var(--off) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── CONFETTI ── */
+.confetti {
+  position: absolute;
+  border-radius: 2px;
+  animation: confettiFall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar-track {
+  height: 8px; background: var(--border); border-radius: var(--radius-pill); overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--coral), var(--lavender));
+  border-radius: var(--radius-pill);
+  transition: width 0.5s ease;
+}
+
+/* ── TYPEWRITER ── */
+.typewriter::after {
+  content: '|';
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── NICHE ANIMATIONS ── */
+
+/* Desserts — floating items */
+.anim-desserts .float-product { filter: drop-shadow(0 4px 8px rgba(255,107,107,0.3)); }
+
+/* Coffee — steam rising */
+@keyframes steamRise {
+  0%   { transform: translateY(0) scaleX(1); opacity: 0.6; }
+  50%  { transform: translateY(-30px) scaleX(1.3); opacity: 0.3; }
+  100% { transform: translateY(-60px) scaleX(0.8); opacity: 0; }
+}
+.steam {
+  position: absolute;
+  width: 4px; border-radius: 4px;
+  background: rgba(255,255,255,0.6);
+  animation: steamRise 2s ease-in-out infinite;
+}
+
+/* Jewelry — sparkle */
+.sparkle-dot {
+  position: absolute;
+  width: 6px; height: 6px;
+  background: gold;
+  border-radius: 50%;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Clothing — drift */
+@keyframes driftAcross {
+  0%   { transform: translateX(-100px) rotate(-5deg); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(calc(100vw + 100px)) rotate(5deg); opacity: 0; }
+}
+.drift-item { animation: driftAcross linear infinite; }

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YABA — Your AI Business Assistant</title>
+  <meta name="description" content="Describe your business. YABA builds your website, CRM, content calendar, automations, and business plan automatically.">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/landing.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">YABA ✨</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <div class="nav-actions">
+      <a href="/login" class="btn btn-ghost">Log In</a>
+      <a href="/signup" class="btn btn-primary">Start Free Trial →</a>
+    </div>
+    <button class="nav-mobile-btn" onclick="toggleMobileMenu()">☰</button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/login">Log In</a>
+    <a href="/signup" class="btn btn-primary">Start Free Trial</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">✦ Powered by Claude AI — No setup required</div>
+    <h1 class="hero-title">
+      Your entire business,<br>
+      <span class="text-grad">built in 10 minutes.</span>
+    </h1>
+    <p class="hero-sub">
+      Tell YABA about your business. She builds your website, CRM, funnels,
+      content calendar, workflows, and business plan — all customized for
+      your niche. Automatically.
+    </p>
+    <div class="hero-actions">
+      <a href="/signup" class="btn btn-primary btn-large">Build My Business Free →</a>
+      <button class="btn btn-secondary btn-large" onclick="showToast('Demo coming soon! Sign up to see the real thing. ✨')">▶ Watch Demo</button>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-avatars">
+        <div class="avatar" style="background:var(--coral)">JD</div>
+        <div class="avatar" style="background:var(--lavender)">SK</div>
+        <div class="avatar" style="background:var(--mint);color:var(--dark)">MR</div>
+        <div class="avatar" style="background:var(--yellow);color:var(--dark)">TW</div>
+      </div>
+      <span>Join <strong>2,400+</strong> businesses already using YABA</span>
+    </div>
+  </div>
+
+  <!-- Floating status cards -->
+  <div class="hero-cards">
+    <div class="float-card card-1">
+      <div class="fc-icon">🌐</div>
+      <div class="fc-text">
+        <div class="fc-title">Website Generated</div>
+        <div class="fc-sub">sweetcravings.yaba.com</div>
+      </div>
+      <div class="fc-check">✅</div>
+    </div>
+    <div class="float-card card-2">
+      <div class="fc-icon">📊</div>
+      <div class="fc-text">
+        <div class="fc-title">Business Plan Ready</div>
+        <div class="fc-sub">$100K roadmap created</div>
+      </div>
+      <div class="fc-check">✅</div>
+    </div>
+    <div class="float-card card-3">
+      <div class="fc-icon">📅</div>
+      <div class="fc-text">
+        <div class="fc-title">30 Days of Content</div>
+        <div class="fc-sub">Instagram + TikTok ready</div>
+      </div>
+      <div class="fc-check">✅</div>
+    </div>
+    <div class="float-card card-4">
+      <div class="fc-icon">⚡</div>
+      <div class="fc-text">
+        <div class="fc-title">32 Workflows Active</div>
+        <div class="fc-sub">Running on autopilot</div>
+      </div>
+      <div class="fc-check">✅</div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="logos-sec">
+  <p class="logos-label">Works with the tools you already use</p>
+  <div class="logos-row">
+    <div class="logo-pill">📸 Instagram</div>
+    <div class="logo-pill">🎵 TikTok</div>
+    <div class="logo-pill">💳 Stripe</div>
+    <div class="logo-pill">📧 SendGrid</div>
+    <div class="logo-pill">💬 Twilio</div>
+    <div class="logo-pill">🤖 ManyChat</div>
+    <div class="logo-pill">🗺️ Google</div>
+    <div class="logo-pill">🚚 Shippo</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="steps-sec" id="how-it-works">
+  <div class="sec-label">Simple process</div>
+  <h2 class="sec-title">From zero to full business in 4 steps</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num grad-coral">1</div>
+      <h3>Tell YABA about your business</h3>
+      <p>Answer a few questions about what you sell, your goals, and your style. Takes 3 minutes.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num grad-lavender">2</div>
+      <h3>YABA builds everything</h3>
+      <p>Website, business plan, content calendar, funnels, CRM, email sequences, and 32 workflows — generated in 60 seconds.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num grad-mint">3</div>
+      <h3>Connect your tools</h3>
+      <p>Link your Stripe, ManyChat, and social accounts. Guided setup — no tech skills needed.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num" style="background:linear-gradient(135deg,var(--yellow),var(--orange))">4</div>
+      <h3>Start growing</h3>
+      <p>Follow your business plan, post your content calendar, and let YABA's workflows handle the rest automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-sec" id="features">
+  <div class="sec-label">Everything included</div>
+  <h2 class="sec-title">One platform.<br>Your entire business.</h2>
+  <div class="features-grid">
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(255,107,107,.1)">🌐</div>
+      <h4>AI Website Generator</h4>
+      <p>YABA generates a stunning website with looping video hero, niche animations, and professional copy — from your product description alone.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(167,139,250,.1)">📊</div>
+      <h4>Financial Business Plan</h4>
+      <p>Tell YABA your revenue goal and current budget. She builds a realistic phase-by-phase roadmap to get you there.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(78,205,196,.1)">🎯</div>
+      <h4>AI Funnel Builder</h4>
+      <p>Auto-generates your first conversion funnel based on your primary goal. Lead capture, sales pages, appointment funnels — all written by Claude.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(255,210,63,.15)">👥</div>
+      <h4>AI-Powered CRM</h4>
+      <p>Leads get scored automatically. Claude writes follow-up messages. Pipeline stages update themselves. Like having a sales assistant working 24/7.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(244,114,182,.1)">📅</div>
+      <h4>30-Day Content Calendar</h4>
+      <p>Platform-specific content — hooks, captions, scripts, hashtags, and posting times — generated for Instagram, TikTok, and Facebook.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(52,211,153,.1)">⚡</div>
+      <h4>32 Workflow Automations</h4>
+      <p>Pre-built workflows activate automatically. New lead? Workflow fires. Abandoned cart? Workflow fires. You focus on the business.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(255,142,83,.1)">📧</div>
+      <h4>Email Marketing</h4>
+      <p>Welcome sequences, abandoned cart recovery, post-purchase follow-ups — all written by Claude and ready to send on day one.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(255,107,107,.1)">💬</div>
+      <h4>SMS Campaigns</h4>
+      <p>Two-way SMS conversations, bulk campaigns, and automated sequences via Twilio. YABA suggests replies automatically.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(167,139,250,.1)">🤝</div>
+      <h4>Affiliate CRM</h4>
+      <p>Full affiliate management — tracking links, commission tracking, performance analytics, and automatic Stripe payouts.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(78,205,196,.1)">📆</div>
+      <h4>Native Booking System</h4>
+      <p>Service providers get a full Calendly-style booking system built in. No third-party needed. Reminders fire automatically.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(255,210,63,.15)">🛍️</div>
+      <h4>Ecommerce Store</h4>
+      <p>Product listings, inventory tracking, order management, and Stripe checkout — all connected to your generated website.</p>
+    </div>
+
+    <div class="feat-card card card-hover">
+      <div class="feat-icon" style="background:rgba(52,211,153,.1)">⭐</div>
+      <h4>Review Management</h4>
+      <p>Monitor Google and Facebook reviews. Claude writes personalized responses. Review requests send automatically after every purchase.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-sec" id="pricing">
+  <div class="sec-label">Simple pricing</div>
+  <h2 class="sec-title">Start free.<br>Scale when you're ready.</h2>
+  <p class="sec-sub">No setup fees. No contracts. Cancel anytime.</p>
+  <div class="pricing-grid">
+
+    <div class="price-card card">
+      <div class="price-name">Starter</div>
+      <div class="price-desc">Perfect for new businesses</div>
+      <div class="price-amount">$49<span>/mo</span></div>
+      <ul class="price-features">
+        <li>✅ AI website generator</li>
+        <li>✅ Business plan + roadmap</li>
+        <li>✅ CRM — up to 500 contacts</li>
+        <li>✅ 20 products</li>
+        <li>✅ Email marketing</li>
+        <li>✅ 3 active funnels</li>
+        <li>✅ Basic workflows</li>
+      </ul>
+      <a href="/signup?plan=starter" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:auto">Get Started</a>
+    </div>
+
+    <div class="price-card card featured">
+      <div class="price-badge">Most Popular ✨</div>
+      <div class="price-name">Growth</div>
+      <div class="price-desc">For businesses ready to scale</div>
+      <div class="price-amount">$97<span>/mo</span></div>
+      <ul class="price-features">
+        <li>✅ Everything in Starter</li>
+        <li>✅ Unlimited products</li>
+        <li>✅ CRM — up to 2,500 contacts</li>
+        <li>✅ SMS automation</li>
+        <li>✅ Affiliate CRM</li>
+        <li>✅ Native booking system</li>
+        <li>✅ All 32 workflows</li>
+        <li>✅ Keyword triggers</li>
+        <li>✅ Abandoned cart recovery</li>
+      </ul>
+      <a href="/signup?plan=growth" class="btn btn-primary" style="width:100%;justify-content:center">Start Free Trial →</a>
+    </div>
+
+    <div class="price-card card">
+      <div class="price-name">Agency</div>
+      <div class="price-desc">Manage multiple businesses</div>
+      <div class="price-amount">$197<span>/mo</span></div>
+      <ul class="price-features">
+        <li>✅ Everything in Growth</li>
+        <li>✅ Up to 10 client accounts</li>
+        <li>✅ Unlimited contacts</li>
+        <li>✅ White label ready</li>
+        <li>✅ Agency master dashboard</li>
+        <li>✅ Priority support</li>
+      </ul>
+      <a href="/signup?plan=agency" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:auto">Get Started</a>
+    </div>
+
+  </div>
+  <div class="trial-note">
+    🎉 All plans include a <strong>14-day free trial</strong>. No credit card required to start.
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-inner">
+    <h2>Your business is waiting.<br>Let's build it.</h2>
+    <p>Join thousands of small businesses running on YABA. Setup takes 10 minutes.</p>
+    <a href="/signup" class="btn btn-primary btn-large">Build My Business Free →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">YABA ✨</div>
+    <div class="footer-tagline">Your AI Business Assistant</div>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/login">Login</a>
+      <a href="/signup">Sign Up</a>
+    </div>
+    <div class="footer-copy">© 2026 YABA. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="toast-container" id="toasts"></div>
+<script src="/js/landing.js"></script>
+</body>
+</html>

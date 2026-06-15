@@ -1,0 +1,46 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[dev]
+  port = 8888
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/onboarding"
+  to = "/onboarding.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/signup"
+  to = "/signup.html"
+  status = 200
+
+[[redirects]]
+  from = "/f/:slug"
+  to = "/funnel.html"
+  status = 200
+
+[[redirects]]
+  from = "/store/:id"
+  to = "/storefront.html"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
