@@ -373,8 +373,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1-4-4 4 4 0 0 1 4-4 4 4 0 0 1 4-4z"/><circle cx="12" cy="10" r="2"/></svg>
         </div>
         <div style="flex:1">
-          <div class="ai-banner-title">YABA AI &mdash; Good morning! Here's what needs your attention today.</div>
-          <div class="ai-banner-text">You have 3 hot leads waiting. Sarah Johnson scored 9/10 — she asked about pricing 2 hours ago. Send her a quote now before she finds someone else.</div>
+          <div class="ai-banner-title" id="ai-banner-title">YABA AI &mdash; Loading your dashboard...</div>
+          <div class="ai-banner-text" id="ai-banner-text">Fetching your latest leads, orders, and activity now.</div>
           <div class="ai-banner-btns">
             <button class="btn btn-blue btn-sm" onclick="showPanel('crm',null)">View Hot Leads</button>
             <button class="btn btn-ghost btn-sm">Dismiss</button>
@@ -388,33 +388,33 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           <div class="stat-icon" style="background:var(--blue-lt)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
-          <div class="stat-num">$4,280</div>
+          <div class="stat-num" id="stat-revenue">$0</div>
           <div class="stat-lbl">Revenue This Month</div>
-          <div class="stat-change sc-up">↑ 23% from last month</div>
+          <div class="stat-change sc-up">Live from Stripe</div>
         </div>
         <div class="stat-card sc-coral">
           <div class="stat-icon" style="background:var(--coral-lt)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="11" x2="23" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/></svg>
           </div>
-          <div class="stat-num">12</div>
+          <div class="stat-num" id="stat-leads">0</div>
           <div class="stat-lbl">New Leads</div>
-          <div class="stat-change sc-up">↑ 8 this week</div>
+          <div class="stat-change sc-up">From your CRM</div>
         </div>
         <div class="stat-card sc-green">
           <div class="stat-icon" style="background:var(--green-lt)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           </div>
-          <div class="stat-num">7</div>
+          <div class="stat-num" id="stat-orders">0</div>
           <div class="stat-lbl">Orders This Week</div>
-          <div class="stat-change sc-up">↑ 2 today</div>
+          <div class="stat-change sc-up">From your store</div>
         </div>
         <div class="stat-card sc-gold">
           <div class="stat-icon" style="background:var(--gold-lt)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <div class="stat-num">32</div>
+          <div class="stat-num" id="stat-workflows">0</div>
           <div class="stat-lbl">Workflows Active</div>
-          <div class="stat-change" style="color:var(--green)">All running 24/7</div>
+          <div class="stat-change" style="color:var(--green)">Running 24/7</div>
         </div>
       </div>
 
@@ -428,38 +428,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
             </div>
             <button class="card-action" onclick="showPanel('crm',null)">View All</button>
           </div>
-          <div class="lead-item">
-            <div class="lead-avatar" style="background:var(--coral)">SJ</div>
-            <div class="lead-info">
-              <div class="lead-name">Sarah Johnson</div>
-              <div class="lead-meta">Instagram &middot; 2 hours ago &middot; Birthday cake inquiry</div>
-            </div>
-            <div class="lead-score ls-hot">9/10</div>
-            <div class="lead-actions">
-              <button class="btn btn-blue btn-sm">Quote</button>
-            </div>
-          </div>
-          <div class="lead-item">
-            <div class="lead-avatar" style="background:var(--blue)">PP</div>
-            <div class="lead-info">
-              <div class="lead-name">Priya Patel</div>
-              <div class="lead-meta">TikTok &middot; 4 hours ago &middot; Wedding dessert table</div>
-            </div>
-            <div class="lead-score ls-hot">8/10</div>
-            <div class="lead-actions">
-              <button class="btn btn-blue btn-sm">Quote</button>
-            </div>
-          </div>
-          <div class="lead-item">
-            <div class="lead-avatar" style="background:var(--gold)" style="color:var(--dark)">MW</div>
-            <div class="lead-info">
-              <div class="lead-name">Marcus Williams</div>
-              <div class="lead-meta">Contact form &middot; 1 day ago &middot; Custom cookie boxes</div>
-            </div>
-            <div class="lead-score ls-warm">7/10</div>
-            <div class="lead-actions">
-              <button class="btn btn-outline btn-sm">Follow Up</button>
-            </div>
+          <div id="leads-container">
+            <div style="text-align:center;padding:20px;color:var(--gray2);font-size:0.82rem">Loading leads...</div>
           </div>
         </div>
 
@@ -479,25 +449,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           </div>
           <div class="card">
             <div class="card-title">Live Activity</div>
-            <div class="activity-item">
-              <div class="act-dot" style="background:var(--green)"></div>
-              <div class="act-text">New order placed — $89 &middot; Cookie box</div>
-              <div class="act-time">2m ago</div>
-            </div>
-            <div class="activity-item">
-              <div class="act-dot" style="background:var(--blue)"></div>
-              <div class="act-text">Sarah Johnson — scored 9/10 by AI</div>
-              <div class="act-time">12m ago</div>
-            </div>
-            <div class="activity-item">
-              <div class="act-dot" style="background:var(--coral)"></div>
-              <div class="act-text">Abandoned cart recovered — $127</div>
-              <div class="act-time">1hr ago</div>
-            </div>
-            <div class="activity-item">
-              <div class="act-dot" style="background:var(--purple)"></div>
-              <div class="act-text">New 5-star review on Google</div>
-              <div class="act-time">2hr ago</div>
+            <div id="activity-container">
+              <div style="text-align:center;padding:20px;color:var(--gray2);font-size:0.82rem">Loading activity...</div>
             </div>
           </div>
         </div>
@@ -510,21 +463,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
             <div class="card-title-left">Content Due Today</div>
             <button class="card-action" onclick="showPanel('content',null)">View Calendar</button>
           </div>
-          <div class="lead-item">
-            <div class="lead-avatar" style="background:#E1306C;border-radius:8px">IG</div>
-            <div class="lead-info">
-              <div class="lead-name">Instagram Reel</div>
-              <div class="lead-meta">"I went from $0 to $4K doing THIS..." &middot; Post at 6pm</div>
-            </div>
-            <span class="tag tag-coral">Due Today</span>
-          </div>
-          <div class="lead-item">
-            <div class="lead-avatar" style="background:#000;border-radius:8px">TT</div>
-            <div class="lead-info">
-              <div class="lead-name">TikTok Video</div>
-              <div class="lead-meta">Behind the scenes cake decorating &middot; Post at 7pm</div>
-            </div>
-            <span class="tag tag-blue">Scheduled</span>
+          <div id="content-container">
+            <div style="text-align:center;padding:20px;color:var(--gray2);font-size:0.82rem">Loading content...</div>
           </div>
         </div>
 
@@ -533,30 +473,30 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           <div class="usage-bar-wrap">
             <div class="usage-bar-label">
               <span class="usage-bar-name">Claude AI Requests</span>
-              <span class="usage-bar-num">340 / 2,000</span>
+              <span class="usage-bar-num" id="usage-claude-num">— / —</span>
             </div>
-            <div class="usage-bar-track"><div class="usage-bar-fill" style="width:17%;background:var(--blue)"></div></div>
+            <div class="usage-bar-track"><div class="usage-bar-fill" id="usage-claude-fill" style="width:0%;background:var(--blue)"></div></div>
           </div>
           <div class="usage-bar-wrap">
             <div class="usage-bar-label">
               <span class="usage-bar-name">Image Generation</span>
-              <span class="usage-bar-num">28 / 200</span>
+              <span class="usage-bar-num" id="usage-replicate-num">— / —</span>
             </div>
-            <div class="usage-bar-track"><div class="usage-bar-fill" style="width:14%;background:var(--purple)"></div></div>
+            <div class="usage-bar-track"><div class="usage-bar-fill" id="usage-replicate-fill" style="width:0%;background:var(--purple)"></div></div>
           </div>
           <div class="usage-bar-wrap">
             <div class="usage-bar-label">
               <span class="usage-bar-name">Emails Sent</span>
-              <span class="usage-bar-num">890 / 5,000</span>
+              <span class="usage-bar-num" id="usage-email-num">— / —</span>
             </div>
-            <div class="usage-bar-track"><div class="usage-bar-fill" style="width:18%;background:var(--coral)"></div></div>
+            <div class="usage-bar-track"><div class="usage-bar-fill" id="usage-email-fill" style="width:0%;background:var(--coral)"></div></div>
           </div>
           <div class="usage-bar-wrap">
             <div class="usage-bar-label">
               <span class="usage-bar-name">SMS Messages</span>
-              <span class="usage-bar-num">67 / 500</span>
+              <span class="usage-bar-num" id="usage-sms-num">— / —</span>
             </div>
-            <div class="usage-bar-track"><div class="usage-bar-fill" style="width:13%;background:var(--green)"></div></div>
+            <div class="usage-bar-track"><div class="usage-bar-fill" id="usage-sms-fill" style="width:0%;background:var(--green)"></div></div>
           </div>
         </div>
       </div>
@@ -963,7 +903,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           </div>
           <div class="wf-item">
             <div class="wf-icon" style="background:#1A82E220"><svg width="14" height="14" viewBox="0 0 24 24" fill="#1A82E2"><path d="M0 3.75C0 2.784.784 2 1.75 2h20.5c.966 0 1.75.784 1.75 1.75v14.5A1.75 1.75 0 0122.25 20H1.75A1.75 1.75 0 010 18.25V3.75z"/></svg></div>
-            <div class="wf-info"><div class="wf-name">Resend</div><div class="wf-meta">890 emails sent this month</div></div>
+            <div class="wf-info"><div class="wf-name">SendGrid</div><div class="wf-meta">890 emails sent this month</div></div>
             <span class="tag tag-green">Connected</span>
           </div>
         </div>
@@ -977,7 +917,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
           <div class="wf-item">
             <div class="wf-icon" style="background:#F2264620"><svg width="14" height="14" viewBox="0 0 24 24" fill="#F22F46"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
             <div class="wf-info"><div class="wf-name">Twilio</div><div class="wf-meta">SMS campaigns and two-way conversations</div></div>
-            <button class="btn btn-blue btn-sm">Connect</button>
+            <button class="btn btn-blue btn-sm" onclick="openTwilioModal()">Connect</button>
           </div>
           <div class="wf-item">
             <div class="wf-icon" style="background:#4285F420"><svg width="14" height="14" viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg></div>
@@ -1010,6 +950,155 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
 
   </div>
 </div>
+
+<!-- ══ TWILIO CONNECT MODAL ══ -->
+<style>
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,31,59,0.5);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;max-width:440px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.25);overflow:hidden;animation:modalIn 0.25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title-wrap{display:flex;align-items:center;gap:10px}
+.modal-icon{width:36px;height:36px;border-radius:9px;background:#F2264620;display:flex;align-items:center;justify-content:center}
+.modal-title{font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;color:var(--dark)}
+.modal-close{background:none;border:none;cursor:pointer;color:var(--gray);width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.modal-close:hover{background:var(--off);color:var(--dark)}
+.modal-body{padding:24px}
+.modal-steps{display:flex;flex-direction:column;gap:10px;background:var(--off);border-radius:10px;padding:14px 16px;margin-bottom:20px}
+.modal-step-item{display:flex;gap:10px;font-size:0.8rem;color:var(--gray);align-items:flex-start}
+.modal-step-num{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.modal-field{margin-bottom:14px}
+.modal-label{font-size:0.78rem;font-weight:700;color:var(--dark);margin-bottom:5px;display:block}
+.modal-input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;color:var(--dark);outline:none;transition:border-color 0.2s;font-family:'Inter',sans-serif}
+.modal-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,115,234,0.1)}
+.modal-help{font-size:0.7rem;color:var(--gray2);margin-top:4px}
+.modal-error{background:var(--coral-lt);color:var(--coral);border-radius:7px;padding:9px 12px;font-size:0.78rem;font-weight:600;margin-bottom:14px;display:none}
+.modal-error.show{display:block}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.modal-spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+<div class="modal-overlay" id="twilio-modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="#F22F46"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div>
+        <div class="modal-title">Connect Twilio</div>
+      </div>
+      <button class="modal-close" onclick="closeTwilioModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-steps">
+        <div class="modal-step-item"><div class="modal-step-num">1</div>Go to twilio.com and sign up or log in</div>
+        <div class="modal-step-item"><div class="modal-step-num">2</div>On your Console Dashboard, copy your Account SID and Auth Token</div>
+        <div class="modal-step-item"><div class="modal-step-num">3</div>Buy a phone number under Phone Numbers → Buy a Number</div>
+        <div class="modal-step-item"><div class="modal-step-num">4</div>Paste all three below</div>
+      </div>
+
+      <div class="modal-error" id="twilio-error"></div>
+
+      <div class="modal-field">
+        <label class="modal-label">Account SID</label>
+        <input class="modal-input" type="text" id="twilio-sid" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Auth Token</label>
+        <input class="modal-input" type="password" id="twilio-token" placeholder="Your Twilio Auth Token">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Phone Number</label>
+        <input class="modal-input" type="text" id="twilio-number" placeholder="+14045551234">
+        <div class="modal-help">Include country code, e.g. +1 for US numbers</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeTwilioModal()">Cancel</button>
+      <button class="btn btn-blue" id="twilio-connect-btn" onclick="submitTwilioConnect()">Connect Account</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openTwilioModal() {
+  document.getElementById('twilio-modal-overlay').classList.add('open')
+  document.getElementById('twilio-error').classList.remove('show')
+}
+function closeTwilioModal() {
+  document.getElementById('twilio-modal-overlay').classList.remove('open')
+}
+async function submitTwilioConnect() {
+  const sid = document.getElementById('twilio-sid').value.trim()
+  const token = document.getElementById('twilio-token').value.trim()
+  const number = document.getElementById('twilio-number').value.trim()
+  const errorBox = document.getElementById('twilio-error')
+  const btn = document.getElementById('twilio-connect-btn')
+
+  errorBox.classList.remove('show')
+
+  if (!sid || !sid.startsWith('AC')) {
+    errorBox.textContent = 'Account SID should start with "AC"'
+    errorBox.classList.add('show')
+    return
+  }
+  if (!token) {
+    errorBox.textContent = 'Auth Token is required'
+    errorBox.classList.add('show')
+    return
+  }
+  if (!number || !number.startsWith('+')) {
+    errorBox.textContent = 'Phone number should start with + and country code'
+    errorBox.classList.add('show')
+    return
+  }
+
+  const businessId = localStorage.getItem('yaba_business_id')
+  if (!businessId) {
+    errorBox.textContent = 'No business found. Please complete onboarding first.'
+    errorBox.classList.add('show')
+    return
+  }
+
+  btn.innerHTML = '<span class="modal-spinner"></span> Connecting...'
+  btn.disabled = true
+
+  try {
+    const res = await fetch('/.netlify/functions/connect-twilio', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ businessId, accountSid: sid, authToken: token, phoneNumber: number })
+    })
+    const result = await res.json()
+    if (!res.ok) throw new Error(result.error || 'Failed to connect')
+
+    closeTwilioModal()
+    toast('Twilio connected successfully!')
+
+    // Update the integrations UI to show connected state
+    document.querySelectorAll('.wf-name').forEach(el => {
+      if (el.textContent === 'Twilio') {
+        const item = el.closest('.wf-item')
+        const btn2 = item.querySelector('button')
+        btn2.outerHTML = '<span class="tag tag-green">Connected</span>'
+      }
+    })
+  } catch (err) {
+    errorBox.textContent = err.message
+    errorBox.classList.add('show')
+    btn.innerHTML = 'Connect Account'
+    btn.disabled = false
+  }
+}
+
+// Reuse existing toast() if present, else define a fallback
+if (typeof toast !== 'function') {
+  function toast(msg) {
+    alert(msg)
+  }
+}
+</script>
 
 <script>
 // Panel navigation
@@ -1053,15 +1142,188 @@ function logout() {
   window.location.href = 'index.html'
 }
 
-// Load user info
+// ══ REAL DATA LOADING ══
 const user = JSON.parse(localStorage.getItem('yaba_user') || '{}')
-const biz  = JSON.parse(localStorage.getItem('yaba_onboarding') || '{}')
 
-if (biz.businessName) document.getElementById('sb-biz-name').textContent = biz.businessName
+// Set user info immediately from localStorage (fast)
 if (user.email) {
   document.getElementById('sb-user-email').textContent = user.email
-  document.getElementById('sb-user-name').textContent = (user.firstName || '') + ' ' + (user.lastName || '')
+  document.getElementById('sb-user-name').textContent = ((user.firstName || '') + ' ' + (user.lastName || '')).trim() || user.email
 }
+
+// Then load real data from Supabase via dashboard-data function
+async function loadDashboardData() {
+  const token = localStorage.getItem('yaba_token')
+  if (!token) {
+    window.location.href = 'login.html'
+    return
+  }
+
+  try {
+    const res = await fetch('/.netlify/functions/dashboard-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (res.status === 401) {
+      window.location.href = 'login.html'
+      return
+    }
+
+    const data = await res.json()
+
+    if (data.needsOnboarding) {
+      window.location.href = 'onboarding.html'
+      return
+    }
+
+    if (!data.success) return
+
+    // ── Sidebar business name ──
+    const biz = data.business
+    if (biz?.business_name) document.getElementById('sb-biz-name').textContent = biz.business_name
+
+    // ── Overview stat cards ──
+    const stats = data.stats
+    setEl('stat-revenue', '$' + Number(stats.monthRevenue).toLocaleString())
+    setEl('stat-leads', stats.newLeads)
+    setEl('stat-orders', stats.ordersThisWeek)
+    setEl('stat-workflows', stats.activeWorkflows)
+
+    // ── AI suggestion banner ──
+    if (data.hotLeads?.length > 0) {
+      const topLead = data.hotLeads[0]
+      setEl('ai-banner-title', `YABA AI — ${data.hotLeads.length} hot lead${data.hotLeads.length > 1 ? 's' : ''} need your attention`)
+      setEl('ai-banner-text', `${topLead.name} scored ${topLead.score}/10 — ${topLead.recommendedAction || 'Follow up now before they go cold.'}`)
+    }
+
+    // ── Hot leads list ──
+    const leadsContainer = document.getElementById('leads-container')
+    if (leadsContainer && data.hotLeads?.length > 0) {
+      leadsContainer.innerHTML = data.hotLeads.slice(0, 3).map(lead => {
+        const scoreClass = lead.score >= 8 ? 'ls-hot' : lead.score >= 6 ? 'ls-warm' : 'ls-cool'
+        const initials = lead.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+        const colors = ['var(--coral)', 'var(--blue)', 'var(--purple)', 'var(--green)']
+        const color = colors[lead.name.charCodeAt(0) % colors.length]
+        return `
+          <div class="lead-item">
+            <div class="lead-avatar" style="background:${color}">${initials}</div>
+            <div class="lead-info">
+              <div class="lead-name">${lead.name}</div>
+              <div class="lead-meta">${lead.source || 'Unknown'} &middot; ${timeAgo(lead.createdAt)}</div>
+            </div>
+            <div class="lead-score ${scoreClass}">${lead.score}/10</div>
+            <div class="lead-actions">
+              <button class="btn btn-blue btn-sm" onclick="showPanel('crm',null)">View</button>
+            </div>
+          </div>`
+      }).join('')
+    } else if (leadsContainer) {
+      leadsContainer.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray2);font-size:0.82rem">No leads yet — your workflows are ready to capture them</div>'
+    }
+
+    // ── Activity feed ──
+    const activityContainer = document.getElementById('activity-container')
+    if (activityContainer && data.activity?.length > 0) {
+      activityContainer.innerHTML = data.activity.map(item => `
+        <div class="activity-item">
+          <div class="act-dot" style="background:var(--${item.color})"></div>
+          <div class="act-text">${item.text} &middot; ${item.source}</div>
+          <div class="act-time">${timeAgo(item.time)}</div>
+        </div>`).join('')
+    }
+
+    // ── Content due today ──
+    const contentContainer = document.getElementById('content-container')
+    if (contentContainer && data.todayContent?.length > 0) {
+      contentContainer.innerHTML = data.todayContent.slice(0, 3).map(post => `
+        <div class="lead-item">
+          <div class="lead-avatar" style="background:${platformColor(post.platform)};border-radius:8px;font-size:0.65rem">${post.platform.slice(0,2).toUpperCase()}</div>
+          <div class="lead-info">
+            <div class="lead-name">${platformLabel(post.platform)} ${post.content_type}</div>
+            <div class="lead-meta">${post.hook ? post.hook.slice(0, 50) + '...' : 'Content ready'} &middot; ${post.best_time || '6:00 PM'}</div>
+          </div>
+          <span class="tag tag-coral">Due Today</span>
+        </div>`).join('')
+    } else if (contentContainer) {
+      contentContainer.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray2);font-size:0.82rem">No content scheduled today</div>'
+    }
+
+    // ── Usage meters ──
+    const usageLimits = {
+      free:    { claude: [5,50],    replicate: [2,10],    email: [5,50],    sms: [0,0] },
+      starter: { claude: [20,500],  replicate: [3,50],    email: [40,1000], sms: [5,100] },
+      growth:  { claude: [80,2000], replicate: [10,200],  email: [200,5000],sms: [20,500] },
+      agency:  { claude: [400,10000],replicate:[40,1000], email: [1000,25000],sms:[80,2000] }
+    }
+    const plan = data.usage?.plan || 'free'
+    const limits = usageLimits[plan] || usageLimits.free
+    const u = data.usage
+
+    setUsageBar('usage-claude',    u.claude?.monthly || 0,    limits.claude[1],    `${u.claude?.monthly || 0} / ${limits.claude[1]}`)
+    setUsageBar('usage-replicate', u.replicate?.monthly || 0, limits.replicate[1], `${u.replicate?.monthly || 0} / ${limits.replicate[1]}`)
+    setUsageBar('usage-email',     u.email?.monthly || 0,     limits.email[1],     `${u.email?.monthly || 0} / ${limits.email[1]}`)
+    setUsageBar('usage-sms',       u.sms?.monthly || 0,       limits.sms[1],       `${u.sms?.monthly || 0} / ${limits.sms[1]}`)
+
+    // ── Business plan progress bars ──
+    if (data.plan?.phase_one) {
+      const planPhase = document.getElementById('plan-phase-1-bar')
+      if (planPhase) planPhase.style.width = '65%'
+    }
+
+    // Store business ID for other functions to use
+    localStorage.setItem('yaba_business_id', biz.id)
+
+  } catch (err) {
+    console.error('Dashboard load error:', err)
+  }
+}
+
+// ── Helper functions ──
+function setEl(id, value) {
+  const el = document.getElementById(id)
+  if (el) el.textContent = value
+}
+
+function setUsageBar(id, used, max, label) {
+  const track = document.getElementById(id + '-fill')
+  const num = document.getElementById(id + '-num')
+  if (track && max > 0) {
+    const pct = Math.min((used / max) * 100, 100)
+    track.style.width = pct + '%'
+    if (pct > 80) track.style.background = 'var(--coral)'
+  }
+  if (num) num.textContent = label
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return ''
+  const diff = Date.now() - new Date(dateStr)
+  const mins = Math.floor(diff / 60000)
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}hr ago`
+  return `${Math.floor(hrs / 24)} days ago`
+}
+
+function platformColor(platform) {
+  const colors = { instagram: '#E1306C', tiktok: '#000', facebook: '#1877F2', youtube: '#FF0000', twitter: '#000', linkedin: '#0A66C2' }
+  return colors[platform] || 'var(--blue)'
+}
+
+function platformLabel(platform) {
+  const labels = { instagram: 'Instagram', tiktok: 'TikTok', facebook: 'Facebook', youtube: 'YouTube', twitter: 'X/Twitter', linkedin: 'LinkedIn' }
+  return labels[platform] || platform
+}
+
+// Add IDs to dashboard elements so the JS can update them
+// These IDs need to be added to the HTML stat cards and containers
+document.addEventListener('DOMContentLoaded', () => {
+  loadDashboardData()
+})
 </script>
 </body>
 </html>
