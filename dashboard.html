@@ -929,17 +929,622 @@ button{cursor:pointer;font-family:'Inter',sans-serif}
     </div>
 
     <!-- ── GENERIC PANELS ── -->
-    <div class="panel" id="panel-website">
-      <div style="text-align:center;padding:60px 20px">
-        <div style="width:64px;height:64px;background:var(--blue-lt);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <h2 style="margin-bottom:10px">Your Website</h2>
-        <p style="margin-bottom:24px;max-width:400px;margin-left:auto;margin-right:auto">Your AI-generated website is live. Edit it with AI prompts or click-to-edit.</p>
-        <div style="display:flex;gap:10px;justify-content:center">
-          <button class="btn btn-blue">Edit with AI</button>
-          <a href="#" class="btn btn-outline" target="_blank">View Live Site</a>
+<!-- ═══════════════════════════════════════════════════════════
+  WEBSITE EDITOR PANEL
+  Drop this into dashboard.html replacing the existing
+  panel-website div. This adds the full editor UI.
+═══════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── EDITOR LAYOUT ── */
+.editor-wrap{display:grid;grid-template-columns:1fr 380px;gap:0;height:calc(100vh - 56px - 48px);margin:-24px -28px;overflow:hidden}
+.editor-preview{background:#fff;overflow:hidden;position:relative;border-right:1px solid var(--border)}
+.editor-preview iframe{width:100%;height:100%;border:none;display:block}
+.editor-sidebar{display:flex;flex-direction:column;background:#fff;overflow:hidden}
+
+/* ── EDITOR TOPBAR ── */
+.editor-topbar{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.editor-tabs{display:flex;gap:4px;flex:1}
+.etab{padding:6px 14px;border-radius:6px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.78rem;cursor:pointer;border:none;transition:all 0.2s;background:var(--off);color:var(--gray)}
+.etab.active{background:var(--blue);color:#fff}
+.editor-actions{display:flex;gap:6px}
+
+/* ── AI PROMPT MODE ── */
+.ai-editor{flex:1;display:flex;flex-direction:column;padding:16px;overflow-y:auto}
+.ai-editor.hidden{display:none}
+.ai-prompt-wrap{margin-bottom:16px}
+.ai-prompt-label{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.78rem;color:var(--dark);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ai-prompt-input{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;color:var(--dark);resize:none;outline:none;transition:border-color 0.2s;min-height:80px}
+.ai-prompt-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,115,234,0.1)}
+.ai-prompt-input::placeholder{color:var(--gray2)}
+.ai-quick-prompts{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.ai-qp-label{font-size:0.72rem;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+.ai-qp{background:var(--off);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:0.78rem;color:var(--dark);cursor:pointer;transition:all 0.2s;text-align:left;font-family:'Inter',sans-serif}
+.ai-qp:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-lt)}
+.ai-history{flex:1;overflow-y:auto}
+.ai-history-label{font-size:0.72rem;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.ai-change{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;font-size:0.78rem;color:var(--dark);line-height:1.5}
+.ai-change-prompt{color:var(--blue);font-weight:600;margin-bottom:4px}
+.ai-change-result{color:var(--gray)}
+.ai-change-time{font-size:0.68rem;color:var(--gray2);margin-top:4px}
+
+/* ── CLICK TO EDIT MODE ── */
+.click-editor{flex:1;display:flex;flex-direction:column;padding:16px;overflow-y:auto}
+.click-editor.hidden{display:none}
+.ce-section{margin-bottom:20px}
+.ce-section-title{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.78rem;color:var(--dark);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;display:flex;align-items:center;gap:6px}
+.ce-field{margin-bottom:10px}
+.ce-label{font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:4px;display:block}
+.ce-input{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:0.82rem;color:var(--dark);outline:none;transition:border-color 0.2s;resize:none}
+.ce-input:focus{border-color:var(--blue)}
+.ce-textarea{min-height:64px;resize:vertical}
+
+/* ── COLOR PICKER ── */
+.color-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.color-swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all 0.2s;flex-shrink:0}
+.color-swatch.active{border-color:var(--dark);transform:scale(1.15)}
+.color-hex{width:90px;padding:5px 8px;border:1.5px solid var(--border);border-radius:5px;font-size:0.75rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none}
+.color-hex:focus{border-color:var(--blue)}
+
+/* ── FONT PICKER ── */
+.font-select{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:6px;font-size:0.82rem;color:var(--dark);outline:none;background:#fff;cursor:pointer}
+.font-select:focus{border-color:var(--blue)}
+.font-preview{margin-top:6px;padding:8px 10px;background:var(--off);border-radius:5px;font-size:1rem;color:var(--dark)}
+
+/* ── TOGGLE ── */
+.ce-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.ce-toggle-label{font-size:0.82rem;color:var(--dark);font-weight:500}
+.ce-toggle{width:38px;height:22px;border-radius:100px;border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0}
+.ce-toggle.on{background:var(--green)}
+.ce-toggle.off{background:var(--gray2)}
+.ce-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.ce-toggle.on::after{left:19px}
+.ce-toggle.off::after{left:3px}
+
+/* ── PREVIEW OVERLAY for click-to-edit ── */
+.preview-loading{position:absolute;inset:0;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;z-index:10;flex-direction:column;gap:12px}
+.preview-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.preview-loading-text{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;color:var(--gray)}
+
+/* ── SECTIONS LIST ── */
+.section-list{display:flex;flex-direction:column;gap:6px}
+.section-item{background:var(--off);border:1px solid var(--border);border-radius:7px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:grab;transition:all 0.2s}
+.section-item:hover{border-color:var(--blue)}
+.section-drag{color:var(--gray2);cursor:grab;font-size:1.1rem}
+.section-name{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.78rem;color:var(--dark);flex:1}
+.section-vis{background:none;border:none;cursor:pointer;color:var(--gray2);transition:color 0.2s;padding:2px}
+.section-vis:hover{color:var(--dark)}
+
+@media(max-width:960px){
+  .editor-wrap{grid-template-columns:1fr;height:auto}
+  .editor-preview{height:400px}
+  .editor-sidebar{height:500px}
+}
+</style>
+
+<div class="panel" id="panel-website">
+  <div class="editor-wrap">
+
+    <!-- LEFT — WEBSITE PREVIEW -->
+    <div class="editor-preview">
+      <div class="preview-loading" id="preview-loading">
+        <div class="preview-spinner"></div>
+        <div class="preview-loading-text">Loading your website...</div>
+      </div>
+      <iframe id="website-preview" src="about:blank" onload="previewLoaded()"></iframe>
+    </div>
+
+    <!-- RIGHT — EDITOR SIDEBAR -->
+    <div class="editor-sidebar">
+
+      <!-- TOPBAR -->
+      <div class="editor-topbar">
+        <div class="editor-tabs">
+          <button class="etab active" id="tab-ai" onclick="switchEditorTab('ai')">AI Edit</button>
+          <button class="etab" id="tab-click" onclick="switchEditorTab('click')">Manual Edit</button>
+          <button class="etab" id="tab-sections" onclick="switchEditorTab('sections')">Sections</button>
+        </div>
+        <div class="editor-actions">
+          <button class="btn btn-outline btn-sm" onclick="previewWebsite()">Preview</button>
+          <button class="btn btn-blue btn-sm" onclick="publishWebsite()">Publish</button>
         </div>
       </div>
+
+      <!-- ── AI EDIT TAB ── -->
+      <div class="ai-editor" id="ai-editor-tab">
+        <div class="ai-prompt-wrap">
+          <div class="ai-prompt-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1-4-4 4 4 0 0 1 4-4 4 4 0 0 1 4-4z"/><circle cx="12" cy="10" r="2"/></svg>
+            Tell YABA what to change
+          </div>
+          <textarea class="ai-prompt-input" id="ai-prompt" placeholder='e.g. "Change the headline to something more bold" or "Make the button color gold" or "Rewrite the about section to sound more professional"'></textarea>
+          <button class="btn btn-blue" style="width:100%;margin-top:8px;justify-content:center" onclick="runAiEdit()" id="ai-edit-btn">
+            Apply Change →
+          </button>
+        </div>
+
+        <div class="ai-quick-prompts">
+          <div class="ai-qp-label">Quick edits</div>
+          <button class="ai-qp" onclick="quickPrompt('Make the headline more bold and attention-grabbing')">Make headline bolder</button>
+          <button class="ai-qp" onclick="quickPrompt('Rewrite the about section to sound more professional and trustworthy')">Rewrite about section</button>
+          <button class="ai-qp" onclick="quickPrompt('Change the call-to-action button text to be more urgent')">Make CTA more urgent</button>
+          <button class="ai-qp" onclick="quickPrompt('Make the overall tone more friendly and approachable')">More friendly tone</button>
+          <button class="ai-qp" onclick="quickPrompt('Add more specific details about the products and services')">Add more product detail</button>
+          <button class="ai-qp" onclick="quickPrompt('Make the homepage copy shorter and more punchy')">Make copy shorter</button>
+        </div>
+
+        <div class="ai-history" id="ai-history">
+          <div class="ai-history-label">Recent changes</div>
+          <div id="ai-history-list">
+            <div style="font-size:0.78rem;color:var(--gray2);text-align:center;padding:20px 0">No changes yet — make your first edit above</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MANUAL EDIT TAB ── -->
+      <div class="click-editor hidden" id="click-editor-tab">
+
+        <!-- Hero Section -->
+        <div class="ce-section">
+          <div class="ce-section-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            Hero Section
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Main Headline</label>
+            <input class="ce-input" type="text" id="ce-headline" placeholder="Your main headline" oninput="liveUpdate('headline', this.value)">
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Subheadline</label>
+            <input class="ce-input" type="text" id="ce-subheadline" placeholder="Supporting text" oninput="liveUpdate('subheadline', this.value)">
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Primary Button Text</label>
+            <input class="ce-input" type="text" id="ce-cta" placeholder="Get Started" oninput="liveUpdate('cta', this.value)">
+          </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="ce-section">
+          <div class="ce-section-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            About Section
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">About Heading</label>
+            <input class="ce-input" type="text" id="ce-about-heading" placeholder="About us heading" oninput="liveUpdate('aboutHeading', this.value)">
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">About Body Text</label>
+            <textarea class="ce-input ce-textarea" id="ce-about-body" placeholder="Tell your story..." oninput="liveUpdate('aboutBody', this.value)"></textarea>
+          </div>
+        </div>
+
+        <!-- Brand Colors -->
+        <div class="ce-section">
+          <div class="ce-section-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+            Brand Colors
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Primary Color</label>
+            <div class="color-row">
+              <div class="color-swatch active" style="background:#0073EA" onclick="selectColor('primary','#0073EA',this)"></div>
+              <div class="color-swatch" style="background:#FF5C35" onclick="selectColor('primary','#FF5C35',this)"></div>
+              <div class="color-swatch" style="background:#00CA72" onclick="selectColor('primary','#00CA72',this)"></div>
+              <div class="color-swatch" style="background:#A25DDC" onclick="selectColor('primary','#A25DDC',this)"></div>
+              <div class="color-swatch" style="background:#FFCB00" onclick="selectColor('primary','#FFCB00',this)"></div>
+              <div class="color-swatch" style="background:#1C1F3B" onclick="selectColor('primary','#1C1F3B',this)"></div>
+              <input class="color-hex" type="text" id="color-primary-hex" placeholder="#0073EA" onchange="selectColor('primary',this.value,null)">
+            </div>
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Accent Color</label>
+            <div class="color-row">
+              <div class="color-swatch" style="background:#FF5C35" onclick="selectColor('accent','#FF5C35',this)"></div>
+              <div class="color-swatch" style="background:#FFCB00" onclick="selectColor('accent','#FFCB00',this)"></div>
+              <div class="color-swatch" style="background:#00CA72" onclick="selectColor('accent','#00CA72',this)"></div>
+              <div class="color-swatch active" style="background:#A25DDC" onclick="selectColor('accent','#A25DDC',this)"></div>
+              <div class="color-swatch" style="background:#FF44CC" onclick="selectColor('accent','#FF44CC',this)"></div>
+              <input class="color-hex" type="text" id="color-accent-hex" placeholder="#FF5C35" onchange="selectColor('accent',this.value,null)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Fonts -->
+        <div class="ce-section">
+          <div class="ce-section-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            Fonts
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Heading Font</label>
+            <select class="font-select" id="font-heading" onchange="updateFont('heading', this.value)">
+              <option value="Nunito">Nunito (Current)</option>
+              <option value="Inter">Inter</option>
+              <option value="Playfair Display">Playfair Display</option>
+              <option value="Cormorant Garamond">Cormorant Garamond</option>
+              <option value="Bebas Neue">Bebas Neue</option>
+              <option value="Syne">Syne</option>
+              <option value="Josefin Sans">Josefin Sans</option>
+              <option value="Montserrat">Montserrat</option>
+              <option value="Poppins">Poppins</option>
+              <option value="DM Sans">DM Sans</option>
+            </select>
+            <div class="font-preview" id="font-heading-preview" style="font-family:Nunito,sans-serif;font-weight:900">
+              The quick brown fox
+            </div>
+          </div>
+          <div class="ce-field">
+            <label class="ce-label">Body Font</label>
+            <select class="font-select" id="font-body" onchange="updateFont('body', this.value)">
+              <option value="Inter">Inter (Current)</option>
+              <option value="Nunito">Nunito</option>
+              <option value="Lato">Lato</option>
+              <option value="Lora">Lora</option>
+              <option value="Montserrat">Montserrat</option>
+              <option value="Source Sans Pro">Source Sans Pro</option>
+              <option value="Open Sans">Open Sans</option>
+              <option value="Roboto">Roboto</option>
+            </select>
+            <div class="font-preview" id="font-body-preview" style="font-family:Inter,sans-serif;font-size:0.85rem">
+              Your website body text will look like this paragraph sample.
+            </div>
+          </div>
+        </div>
+
+        <!-- Animations -->
+        <div class="ce-section">
+          <div class="ce-section-title">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Animations
+          </div>
+          <div class="ce-toggle-row">
+            <span class="ce-toggle-label">Hero animations</span>
+            <button class="ce-toggle on" id="toggle-animations" onclick="toggleAnimation(this)"></button>
+          </div>
+          <div class="ce-toggle-row">
+            <span class="ce-toggle-label">Scroll animations</span>
+            <button class="ce-toggle on" id="toggle-scroll" onclick="this.classList.toggle('on');this.classList.toggle('off')"></button>
+          </div>
+        </div>
+
+        <!-- Save button -->
+        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px" onclick="saveManualEdits()">
+          Save Changes
+        </button>
+
+      </div>
+
+      <!-- ── SECTIONS TAB ── -->
+      <div class="click-editor hidden" id="sections-editor-tab">
+        <div style="padding:4px 0 14px">
+          <div style="font-size:0.78rem;color:var(--gray);margin-bottom:12px">Drag to reorder sections. Toggle visibility.</div>
+          <div class="section-list" id="section-list">
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Hero</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">About</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Services / Products</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Testimonials</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Gallery</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Contact / CTA</span><button class="section-vis" title="Hide/Show">👁</button></div>
+            <div class="section-item"><span class="section-drag">⠿</span><span class="section-name">Footer</span><button class="section-vis" title="Hide/Show">👁</button></div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:12px" onclick="addSection()">+ Add Section</button>
+        </div>
+      </div>
+
     </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// WEBSITE EDITOR JS
+// ═══════════════════════════════════════
+
+let editorState = {
+  headline: '',
+  subheadline: '',
+  cta: '',
+  aboutHeading: '',
+  aboutBody: '',
+  primaryColor: '#0073EA',
+  accentColor: '#FF5C35',
+  fontHeading: 'Nunito',
+  fontBody: 'Inter',
+  animationsEnabled: true,
+  changes: []
+}
+
+// Switch between AI / Manual / Sections tabs
+function switchEditorTab(tab) {
+  document.getElementById('ai-editor-tab').classList.add('hidden')
+  document.getElementById('click-editor-tab').classList.add('hidden')
+  document.getElementById('sections-editor-tab').classList.add('hidden')
+  document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'))
+
+  if (tab === 'ai') {
+    document.getElementById('ai-editor-tab').classList.remove('hidden')
+    document.getElementById('tab-ai').classList.add('active')
+  } else if (tab === 'click') {
+    document.getElementById('click-editor-tab').classList.remove('hidden')
+    document.getElementById('tab-click').classList.add('active')
+    loadCurrentCopy()
+  } else if (tab === 'sections') {
+    document.getElementById('sections-editor-tab').classList.remove('hidden')
+    document.getElementById('tab-sections').classList.add('active')
+  }
+}
+
+// Load current website copy into the manual editor fields
+function loadCurrentCopy() {
+  const copy = JSON.parse(localStorage.getItem('yaba_website_copy') || '{}')
+  if (copy.hero) {
+    document.getElementById('ce-headline').value = copy.hero.headline || ''
+    document.getElementById('ce-subheadline').value = copy.hero.subheadline || ''
+    document.getElementById('ce-cta').value = copy.hero.cta_primary || ''
+  }
+  if (copy.about) {
+    document.getElementById('ce-about-heading').value = copy.about.heading || ''
+    document.getElementById('ce-about-body').value = copy.about.body || ''
+  }
+}
+
+// Quick prompt shortcuts
+function quickPrompt(text) {
+  document.getElementById('ai-prompt').value = text
+  document.getElementById('ai-prompt').focus()
+}
+
+// AI edit — calls the website-ai-edit Netlify function
+async function runAiEdit() {
+  const prompt = document.getElementById('ai-prompt').value.trim()
+  if (!prompt) return
+
+  const btn = document.getElementById('ai-edit-btn')
+  btn.textContent = 'Thinking...'
+  btn.disabled = true
+
+  try {
+    const businessId = localStorage.getItem('yaba_business_id')
+    const token = localStorage.getItem('yaba_token')
+    const currentCopy = JSON.parse(localStorage.getItem('yaba_website_copy') || '{}')
+
+    const res = await fetch('/.netlify/functions/website-ai-edit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ businessId, prompt, currentCopy })
+    })
+
+    const result = await res.json()
+
+    if (result.success) {
+      // Save updated copy
+      localStorage.setItem('yaba_website_copy', JSON.stringify(result.updatedCopy))
+
+      // Add to change history
+      addToHistory(prompt, result.summary)
+
+      // Reload preview
+      loadPreview()
+
+      // Clear prompt
+      document.getElementById('ai-prompt').value = ''
+
+      // Smart consistency prompt
+      if (result.applyGlobally) {
+        if (confirm(`YABA suggests: "${result.consistencyMessage}" Apply this change across your whole site?`)) {
+          // Apply globally
+        }
+      }
+    } else {
+      alert('Could not apply that change. Try rephrasing.')
+    }
+
+  } catch (err) {
+    console.error('AI edit error:', err)
+    alert('Something went wrong. Please try again.')
+  } finally {
+    btn.textContent = 'Apply Change →'
+    btn.disabled = false
+  }
+}
+
+// Add change to history display
+function addToHistory(prompt, summary) {
+  const list = document.getElementById('ai-history-list')
+  const item = document.createElement('div')
+  item.className = 'ai-change'
+  item.innerHTML = `
+    <div class="ai-change-prompt">"${prompt}"</div>
+    <div class="ai-change-result">${summary || 'Change applied'}</div>
+    <div class="ai-change-time">Just now</div>
+  `
+  list.insertBefore(item, list.firstChild)
+  // Remove the "no changes yet" placeholder
+  const placeholder = list.querySelector('[style]')
+  if (placeholder) placeholder.remove()
+}
+
+// Live update preview as user types
+function liveUpdate(field, value) {
+  editorState[field] = value
+  // Debounced preview refresh would go here
+}
+
+// Color selection
+function selectColor(type, hex, el) {
+  if (type === 'primary') {
+    editorState.primaryColor = hex
+    document.getElementById('color-primary-hex').value = hex
+    if (el) {
+      document.querySelectorAll('.color-row .color-swatch').forEach(s => {
+        if (s.closest('.ce-field') === el.closest('.ce-field')) s.classList.remove('active')
+      })
+      el.classList.add('active')
+    }
+  } else {
+    editorState.accentColor = hex
+    document.getElementById('color-accent-hex').value = hex
+  }
+}
+
+// Font update
+function updateFont(type, fontName) {
+  if (type === 'heading') {
+    editorState.fontHeading = fontName
+    const preview = document.getElementById('font-heading-preview')
+    preview.style.fontFamily = `'${fontName}', sans-serif`
+    // Load Google Font dynamically
+    loadGoogleFont(fontName)
+  } else {
+    editorState.fontBody = fontName
+    const preview = document.getElementById('font-body-preview')
+    preview.style.fontFamily = `'${fontName}', sans-serif`
+    loadGoogleFont(fontName)
+  }
+}
+
+function loadGoogleFont(fontName) {
+  const id = 'gf-' + fontName.replace(/\s/g, '-')
+  if (!document.getElementById(id)) {
+    const link = document.createElement('link')
+    link.id = id
+    link.rel = 'stylesheet'
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;700;900&display=swap`
+    document.head.appendChild(link)
+  }
+}
+
+// Animation toggle
+function toggleAnimation(btn) {
+  btn.classList.toggle('on')
+  btn.classList.toggle('off')
+  editorState.animationsEnabled = btn.classList.contains('on')
+}
+
+// Save manual edits
+async function saveManualEdits() {
+  const token = localStorage.getItem('yaba_token')
+  const businessId = localStorage.getItem('yaba_business_id')
+  const currentCopy = JSON.parse(localStorage.getItem('yaba_website_copy') || '{}')
+
+  // Merge manual edits into copy
+  if (currentCopy.hero) {
+    if (editorState.headline) currentCopy.hero.headline = editorState.headline
+    if (editorState.subheadline) currentCopy.hero.subheadline = editorState.subheadline
+    if (editorState.cta) currentCopy.hero.cta_primary = editorState.cta
+  }
+  if (currentCopy.about) {
+    if (editorState.aboutHeading) currentCopy.about.heading = editorState.aboutHeading
+    if (editorState.aboutBody) currentCopy.about.body = editorState.aboutBody
+  }
+
+  try {
+    await fetch('/.netlify/functions/save-website-edits', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        businessId,
+        copy: currentCopy,
+        colors: { primary: editorState.primaryColor, accent: editorState.accentColor },
+        fonts: { heading: editorState.fontHeading, body: editorState.fontBody },
+        animationsEnabled: editorState.animationsEnabled
+      })
+    })
+
+    localStorage.setItem('yaba_website_copy', JSON.stringify(currentCopy))
+    alert('Changes saved!')
+    loadPreview()
+  } catch (err) {
+    alert('Failed to save. Please try again.')
+  }
+}
+
+// Load website preview in iframe
+function loadPreview() {
+  const preview = document.getElementById('website-preview')
+  const loading = document.getElementById('preview-loading')
+  loading.style.display = 'flex'
+
+  const businessId = localStorage.getItem('yaba_business_id')
+  if (businessId) {
+    preview.src = `/.netlify/functions/render-website?businessId=${businessId}&t=${Date.now()}`
+  } else {
+    // Show placeholder if no business yet
+    preview.srcdoc = `<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Inter,sans-serif;color:#676879;flex-direction:column;gap:12px;background:#F6F7FB"><div style="font-family:Nunito,sans-serif;font-weight:900;font-size:1.2rem;color:#1C1F3B">Your website will appear here</div><div style="font-size:0.85rem">Complete onboarding to generate your site</div></body></html>`
+    loading.style.display = 'none'
+  }
+}
+
+function previewLoaded() {
+  document.getElementById('preview-loading').style.display = 'none'
+}
+
+function previewWebsite() {
+  const businessId = localStorage.getItem('yaba_business_id')
+  if (businessId) {
+    window.open(`/.netlify/functions/render-website?businessId=${businessId}`, '_blank')
+  }
+}
+
+async function publishWebsite() {
+  const token = localStorage.getItem('yaba_token')
+  const businessId = localStorage.getItem('yaba_business_id')
+
+  const btn = event.target
+  btn.textContent = 'Publishing...'
+  btn.disabled = true
+
+  try {
+    const res = await fetch('/.netlify/functions/publish-website', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ businessId })
+    })
+
+    const result = await res.json()
+    if (result.success) {
+      btn.textContent = '✓ Published!'
+      btn.style.background = 'var(--green)'
+      setTimeout(() => {
+        btn.textContent = 'Publish'
+        btn.style.background = ''
+        btn.disabled = false
+      }, 3000)
+    }
+  } catch (err) {
+    btn.textContent = 'Publish'
+    btn.disabled = false
+    alert('Failed to publish. Please try again.')
+  }
+}
+
+function addSection() {
+  alert('Custom section builder coming in V2!')
+}
+
+// Load preview when website panel is shown
+// This hook fires when showPanel('website') is called
+const _originalShowPanel = window.showPanel
+window.showPanel = function(id, el) {
+  _originalShowPanel(id, el)
+  if (id === 'website') {
+    setTimeout(loadPreview, 100)
+  }
+}
+</script>
+
     <div class="panel" id="panel-funnels"><div style="text-align:center;padding:60px 20px"><div style="width:64px;height:64px;background:var(--coral-lt);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h2 style="margin-bottom:10px">Funnels</h2><p style="margin-bottom:24px">Your first funnel was auto-generated on signup. Publish it or create a new one.</p><button class="btn btn-blue">View My Funnel</button></div></div>
     <div class="panel" id="panel-customers"><div style="text-align:center;padding:60px 20px"><div style="width:64px;height:64px;background:var(--purple-lt);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2 style="margin-bottom:10px">Customers</h2><p style="margin-bottom:24px">View all your customers, their purchase history, and lifetime value.</p><button class="btn btn-blue">View Customers</button></div></div>
     <div class="panel" id="panel-bookings"><div style="text-align:center;padding:60px 20px"><div style="width:64px;height:64px;background:var(--green-lt);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><h2 style="margin-bottom:10px">Booking System</h2><p style="margin-bottom:24px">Set your availability, services, and pricing. Customers book directly from your website.</p><button class="btn btn-blue">Set Up Bookings</button></div></div>
