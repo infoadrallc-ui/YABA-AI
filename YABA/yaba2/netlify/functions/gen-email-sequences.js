@@ -126,7 +126,7 @@ Write 3 complete email sequences. Respond ONLY with valid JSON, no markdown, no 
 
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
+      max_tokens: 4000,
       messages: [{ role: 'user', content: prompt }]
     })
 
