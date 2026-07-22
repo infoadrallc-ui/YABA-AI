@@ -1,7 +1,6 @@
 [build]
-  base = "YABA/yaba2"
   publish = "."
-  functions = "netlify/functions"
+  functions = "YABA/yaba2/netlify/functions"
 
 [functions.scheduled-runner]
   schedule = "*/15 * * * *"
