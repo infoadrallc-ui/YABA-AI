@@ -338,17 +338,34 @@ function goToDashboard() {
 renderSteps()
 setInterval(rotateFact, 5000)
 
-// Start generation
-setTimeout(() => {
-  // Check if we have business data
-  const businessData = localStorage.getItem('yaba_onboarding')
-  if (!businessData) {
-    // Demo mode — simulate without API calls
-    simulateGeneration()
-  } else {
-    runStep(0)
+// Start generation after saving onboarding data first
+async function startGeneration() {
+  const token = localStorage.getItem('yaba_token')
+  const onboardingData = JSON.parse(localStorage.getItem('yaba_onboarding') || '{}')
+
+  // First save onboarding to get a businessId
+  try {
+    const res = await fetch('/.netlify/functions/save-onboarding', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(onboardingData)
+    })
+    const result = await res.json()
+    if (result.businessId) {
+      localStorage.setItem('yaba_business_id', result.businessId)
+    }
+  } catch(err) {
+    console.log('Save onboarding error (continuing):', err.message)
   }
-}, 800)
+
+  // Now run generation steps
+  runStep(0)
+}
+
+startGeneration()
 
 // Demo/fallback simulation
 async function simulateGeneration() {
