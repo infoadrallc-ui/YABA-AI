@@ -83,11 +83,15 @@ export default async (req, context) => {
     }
 
     // Store token in DB (simple session)
-    await supabase.from('sessions').insert({
-      user_id:    user.id,
-      token,
-      expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-    }).catch(() => {}) // sessions table optional — handle gracefully
+    try {
+      await supabase.from('sessions').insert({
+        user_id:    user.id,
+        token,
+        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      })
+    } catch(sessionErr) {
+      console.log('Session save failed:', sessionErr.message)
+    }
 
     return new Response(JSON.stringify({ token, user: safeUser }), {
       status:  200,
